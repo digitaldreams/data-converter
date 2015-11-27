@@ -1,0 +1,24 @@
+{
+    "name": "digitaldream/data-converter",
+    "type": "library",
+    "description": "In web application we need to convert data from one type to another. For example, array to excel file or excel file to array.",
+    "keywords": ["Excel to Array","Array to excel"],
+    "homepage": "https://github.com/Seldaek/monolog",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tuhin Bepari",
+            "email": "digitaldreams40@gmail.com",
+            "homepage": "rpms.ieltsmaster.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "converter": "src"
+        }
+    }
+}
