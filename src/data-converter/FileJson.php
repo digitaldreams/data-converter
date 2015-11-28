@@ -1,4 +1,4 @@
-<?php namespace  Digitaldream\DataConverter;
+<?php namespace  DataConverter;
 
 /**
  * Description of FileJson
