@@ -1,6 +1,6 @@
 <?php
 
-namespace  DataConverter;
+namespace DataConverter;
 
 /**
  * Description of FileManager
@@ -142,7 +142,7 @@ class FileManager {
         'txt' => 'text/plain',
         'json' => 'text/plain',
         'xml' => 'application/xml',
-        'xlsx' => 'application/octet-stream',
+        //   'xlsx' => 'application/octet-stream',
         'csv' => 'text/csv'
     ];
 
