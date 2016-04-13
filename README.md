@@ -20,11 +20,17 @@ something in web application we need to convert data from excel file to array, a
 <?php
 
 $fileManager = new DataConverter\FileExcel();
+
 // A lot of other configuration like you can define from which row you like to read and how many row it will be read. Also you can // //append data to file.  
+
 $config = [
+
     'file_path' => 'C:\Users\Tuhin\Downloads\apiv1567623ccbcfc1_570a009e10650.xlsx',
+    
     'first_row_as_headline' => true,
+    
 ];
+
   $data = $fileManager->config($config)->read()->getData();
    
  //$data = $fileManager->config($config)->read()->toJson();
@@ -32,6 +38,7 @@ $config = [
  //$data = $fileManager->config($config)->read()->toText();
   
  //$data = $fileManager->config($config)->read()->toAssoc();
+ 
   print_r($data);
   
 ?>
