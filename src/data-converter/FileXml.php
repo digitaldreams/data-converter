@@ -1,20 +1,20 @@
-<?php namespace  DataConverter;
+<?php
+
+namespace DataConverter;
 
 /**
  * Description of FileText
  *
  * @author Tuhin
  */
-class FileXml extends FileManager implements FileManagerInterface
-{
+class FileXml extends FileManager implements FileManagerInterface {
 
     /**
      * 
      * @param file $file_path qualified file path
      * @param character $mode file open mode
      */
-    public function __construct($file_path = '', $mode = '')
-    {
+    public function __construct($file_path = '', $mode = '') {
         parent::__construct();
     }
 
@@ -27,24 +27,18 @@ class FileXml extends FileManager implements FileManagerInterface
      * @return \App\Libs\Report\FileText
      * @throws type
      */
-    public function read()
-    {
-        $data = [];
-        $simpleXml = simplexml_load_file($this->file_path);
-        $contacts = $simpleXml->xpath('//contact');
-        //
-        foreach ($contacts as $contact) {
-            $data[] = get_object_vars($contact);
-        }
-        $this->data = $data;
+    public function read() {
+        $ob = simplexml_load_file($this->file_path);
+        $json = json_encode($ob);
+        $array = json_decode($json, true);
+        $this->data = $array;
         return $this;
     }
 
     /**
      * Append data to the end of existing text file.
      */
-    public function append()
-    {
+    public function append() {
         $this->mode = 'a';
         $this->write();
         return $this;
@@ -53,9 +47,9 @@ class FileXml extends FileManager implements FileManagerInterface
     /**
      *  Write data to text file.
      */
-    public function write()
-    {
+    public function write() {
         $this->toXml(true);
         return $this;
     }
+
 }
