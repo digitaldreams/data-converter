@@ -53,8 +53,11 @@ $fileFullPath='test.txt';
   $fileManager = DataConverter\FileManager::initByFileType($fileFullPath);
 
 if ($fileManager === FALSE) {
+
  // exit() File tye does not mathch
+ 
  }
+ 
  //here we used filter. It will take only these two columns value and other data from the souce will be ignored.
  
  $data = $fileManager->config($config)->read()->makeAssoc()->filter(['column_1','column_2])->getData();
