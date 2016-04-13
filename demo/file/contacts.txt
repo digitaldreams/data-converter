@@ -1,0 +1,5 @@
+full_name,primary_phone,secondary_phone,email_address,address,group
+DK,19487412563,19258877142,dk2@mail.com,Mirpur, Dhaka, Bangladesh,Demo Contact
+MBH,19144258745,15874252114,mbh@yahoo.com,Mirpur, Dhaka, Bangladesh,Demo Contact
+Ready,6316218473,6316218473,test01.mll@readyconnected.com,,
+Tuhin Bepari,01925000036,1537019884,digitaldreams40@gmail.com,Mirpur 11, Dhaka,Test
