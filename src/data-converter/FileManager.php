@@ -382,7 +382,7 @@ class FileManager {
         $obj = new static;
 
         $mimeType = static::getMimeType($filePath);
-        $key = array_search($mimeType, $obj->getMimeTypes());
+        $key = array_search($mimeType, $obj->file);
         $obj = static::initByExt($key);
         $obj->file_path = $filePath;
         return $obj;
