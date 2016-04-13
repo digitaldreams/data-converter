@@ -1,12 +1,6 @@
-<?php 
+<?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-namespace  DataConverter;
+namespace DataConverter;
 
 /**
  * Description of FileCsv
@@ -30,11 +24,16 @@ class FileCsv extends FileManager implements FileManagerInterface {
     }
 
     public function write() {
-        $this->loadFile($this->file_path, 'w+');
+        $this->mode = 'w+';
+        $this->loadFile($this->file_path);
+        $splFileObject->fwrite($this->toText());
+        return $this;
     }
 
     public function append() {
-        ;
+        $this->mode = 'a';
+        $this->write();
+        return $this;
     }
 
 }
