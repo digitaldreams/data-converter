@@ -314,6 +314,10 @@ class FileManager {
         return true;
     }
 
+    public function getMimeTypes() {
+        return $this->mime_types;
+    }
+
     public static function getMimeType($filePath) {
         //  fileinfo
         $finfo = new \finfo();
@@ -382,7 +386,7 @@ class FileManager {
         $obj = new static;
 
         $mimeType = static::getMimeType($filePath);
-        $key = array_search($mimeType, $obj->file);
+        $key = array_search($mimeType, $obj->getMimeTypes());
         $obj = static::initByExt($key);
         $obj->file_path = $filePath;
         return $obj;
