@@ -48,7 +48,7 @@ class FileText extends FileManager implements FileManagerInterface
         //create splfileObject if does not exists or return if created
         $splFile = $this->loadFile();
         if ($splFile->getType() != 'file' || $splFile->getExtension() != 'txt') {
-            throw \Exception('Invalid txt file');
+            throw new \Exception('Invalid txt file');
         }
 
         while ($splFile->valid()) {

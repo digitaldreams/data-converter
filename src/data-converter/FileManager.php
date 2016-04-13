@@ -165,7 +165,7 @@ class FileManager {
      */
     public function __call($name, $arguments) {
         $action = substr($name, 0, 3);
-        $name = snake_case(substr($name, 3));
+        $name = strtolower(substr($name, 3));
 
         if (property_exists($this, $name)) {
 
@@ -384,6 +384,7 @@ class FileManager {
         $mimeType = static::getMimeType($filePath);
         $key = array_search($mimeType, $obj->getMimeTypes());
         $obj = static::initByExt($key);
+        $obj->file_path = $filePath;
         return $obj;
     }
 
