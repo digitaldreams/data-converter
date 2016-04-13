@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "converter": "src"
+            "data-converter": "src"
         }
     }
 }

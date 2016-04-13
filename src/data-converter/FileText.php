@@ -54,7 +54,7 @@ class FileText extends FileManager implements FileManagerInterface
         while ($splFile->valid()) {
 
              $currentLineNumber = $splFile->key();
-            $currentLine = $splFile->getCurrentLine();
+            $currentLine = trim($splFile->getCurrentLine());
 
             if (is_int($this->to) && $currentLineNumber > $this->to) {
                 break;
@@ -78,6 +78,7 @@ class FileText extends FileManager implements FileManagerInterface
     {
         $this->mode = 'a';
         $this->write();
+        return $this;
     }
 
     /**
@@ -88,6 +89,7 @@ class FileText extends FileManager implements FileManagerInterface
 
         $splFileObject = $this->loadFile();
         $splFileObject->fwrite($this->toText());
+        return $this;
     }
 
 }

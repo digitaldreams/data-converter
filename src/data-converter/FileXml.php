@@ -29,12 +29,14 @@ class FileXml extends FileManager implements FileManagerInterface
      */
     public function read()
     {
+        $data = [];
         $simpleXml = simplexml_load_file($this->file_path);
         $contacts = $simpleXml->xpath('//contact');
         //
         foreach ($contacts as $contact) {
-            
+            $data[] = get_object_vars($contact);
         }
+        $this->data = $data;
         return $this;
     }
 
@@ -45,6 +47,7 @@ class FileXml extends FileManager implements FileManagerInterface
     {
         $this->mode = 'a';
         $this->write();
+        return $this;
     }
 
     /**
@@ -53,5 +56,6 @@ class FileXml extends FileManager implements FileManagerInterface
     public function write()
     {
         $this->toXml(true);
+        return $this;
     }
 }

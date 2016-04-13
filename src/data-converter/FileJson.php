@@ -1,4 +1,4 @@
-<?php namespace  DataConverter;
+<?php nnamespace  DataConverter;
 
 /**
  * Description of FileJson
@@ -49,5 +49,6 @@ class FileJson extends FileManager implements FileManagerInterface
     {
         $splFileObject = $this->loadFile();
         $splFileObject->fwrite($this->toJson());
+        return $this;
     }
 }

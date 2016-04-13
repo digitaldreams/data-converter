@@ -1,12 +1,13 @@
-<?php namespace DataConverter;
+<?php
+
+namespace  DataConverter;
 
 /**
  * Description of FileManager
  *
  * @author Tuhin
  */
-class FileManager
-{
+class FileManager {
 
     const FILE_TYPE_EXCEL = 'excel';
     const FILE_TYPE_TEXT = 'text';
@@ -141,10 +142,11 @@ class FileManager
         'txt' => 'text/plain',
         'json' => 'text/plain',
         'xml' => 'application/xml',
+        'xlsx' => 'application/octet-stream',
+        'csv' => 'text/csv'
     ];
 
-    public function __construct()
-    {
+    public function __construct() {
         //do initialization
     }
 
@@ -161,8 +163,7 @@ class FileManager
      * @param array $arguments arguments of the property
      * @return \App\Libs\Report\FileManager
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         $action = substr($name, 0, 3);
         $name = snake_case(substr($name, 3));
 
@@ -182,8 +183,7 @@ class FileManager
      * @param array $config
      * @return \App\Libs\Report\FileManager Description
      */
-    public function config(array $config)
-    {
+    public function config(array $config) {
         foreach ($config as $name => $value) {
             if (property_exists($this, $name)) {
                 $this->$name = $value;
@@ -192,8 +192,7 @@ class FileManager
         return $this;
     }
 
-    protected function getHeadline()
-    {
+    protected function getHeadline() {
         if (!empty($this->headline) && is_array($this->headline)) {
             return $this->headline;
         }
@@ -208,8 +207,7 @@ class FileManager
      * @param array $filter Filter array
      * @return type
      */
-    public function filter($filter = [])
-    {
+    public function filter($filter = []) {
         if (!empty($filter)) {
             $this->filter = $filter;
         }
@@ -224,8 +222,7 @@ class FileManager
         return $this;
     }
 
-    public function makeAssoc()
-    {
+    public function makeAssoc() {
         $this->toAssoc();
         return $this;
     }
@@ -234,24 +231,31 @@ class FileManager
      * Make enum index data row to associative array using headline
      * @return type
      */
-    public function toAssoc()
-    {
+    public function toAssoc() {
         $retArr = [];
         $headline = $this->getHeadline();
         //If headline is empty then return from here.
         if (empty($headline)) {
             return $this->data;
         }
-
+        //array_combine will throw error if headline and value are not equal number.
+        $headlines = array_values($headline);
+        $totalHeadline = count($headlines);
         foreach ($this->data as $index => $value) {
-            $retArr[] = array_combine(array_values($headline), $value);
+            //If value array if greater than headline then we trim value array
+            if (count($value) > $totalHeadline) {
+                $value = array_slice($value, 0, $totalHeadline);
+            }
+            if (count($headlines) != count($value)) {
+                continue;
+            }
+            $retArr[] = array_combine($headlines, $value);
         }
         return $this->data = $retArr;
         // return $this;
     }
 
-    public function toJson()
-    {
+    public function toJson() {
         $assocData = $this->toAssoc();
         return json_encode($assocData);
     }
@@ -261,15 +265,14 @@ class FileManager
      * @param boolean $save whether or not xml is written to the specified file
      * @return boolean
      */
-    public function toXml($save = false)
-    {
+    public function toXml($save = false) {
         $assocData = $this->toAssoc();
         $xml = new \DOMDocument();
         $simpleXml = new \SimpleXMLElement('<xml/>');
-        $records = $simpleXml->addChild('records');
+        $records = $simpleXml->addChild('contacts');
 
         foreach ($assocData as $index => $data) {
-            $record = $records->addChild('record');
+            $record = $records->addChild('contact');
 
             foreach ($data as $elem => $value) {
                 $record->addChild($elem, $value);
@@ -287,8 +290,7 @@ class FileManager
      * @param character $seperator Column seperator used as glue for implode() function
      * @return string
      */
-    public function toText($seperator = ',')
-    {
+    public function toText($seperator = ',') {
         $retString = '';
 
         foreach ($this->data as $record) {
@@ -301,8 +303,7 @@ class FileManager
      * Mime Type checking. If it matches accepted mime type list then return true otherwise return false
      * @return boolean
      */
-    public function checkMimeType()
-    {
+    public function checkMimeType() {
         //  fileinfo
         $finfo = new \finfo();
         $this->mime_type = static::getMimeType($this->file_path);
@@ -313,8 +314,7 @@ class FileManager
         return true;
     }
 
-    public static function getMimeType($filePath)
-    {
+    public static function getMimeType($filePath) {
         //  fileinfo
         $finfo = new \finfo();
         return $finfo->file($filePath, FILEINFO_MIME_TYPE);
@@ -324,8 +324,7 @@ class FileManager
      * Get SPL file Object. If not created then create an object and return it.
      * @return \SplFileObject 
      */
-    public function loadFile($file_path = '', $mode = '', $force_create = false)
-    {
+    public function loadFile($file_path = '', $mode = '', $force_create = false) {
         try {
 
             if ($force_create == false && $this->file instanceof \SplFileObject) {
@@ -345,8 +344,7 @@ class FileManager
      * @param \Exception $ex
      * @return type
      */
-    public function setException(\Exception $ex)
-    {
+    public function setException(\Exception $ex) {
         $this->error[] = $ex->getMessage() . 'on ' . $ex->getLine() . 'in ' . $ex->getFile();
         return $this;
     }
@@ -357,8 +355,7 @@ class FileManager
      * @return \App\Libs\Report\FileManager
      * @throws \Exception
      */
-    public function throwException(\Exception $ex)
-    {
+    public function throwException(\Exception $ex) {
         throw new \Exception($ex->getMessage(), $ex->getCode(), $ex);
         return $this;
     }
@@ -368,22 +365,40 @@ class FileManager
      * @return booleab
      * 
      */
-    public function hasError()
-    {
+    public function hasError() {
         return count($this->error) > 0 ? TRUE : FALSE;
     }
 
-    public static function initProperChild($filePath)
-    {
+    /**
+     * There are couple of child class of FileManager class. 
+     * And each child class handle with specific file type. 
+     * Here we will initialize proper child based on file mime type.
+     *  e.g If a user upload an excel file then we this method automatically return new FileExcel.
+     * 
+     * @param path $filePath Full file path. File must be exist
+     * @return FileManager
+     */
+    public static function initByFileType($filePath) {
         $obj = new static;
 
         $mimeType = static::getMimeType($filePath);
         $key = array_search($mimeType, $obj->getMimeTypes());
-        switch ($key) {
+        $obj = static::initByExt($key);
+        return $obj;
+    }
+
+    /**
+     * Initialize proper child class by extension
+     * @param type $ext File Extension. 
+     * Supported extensions are xlsx,xlx,json,txt,xml
+     * @return FileManager
+     */
+    public static function initByExt($ext) {
+        $obj = '';
+        switch ($ext) {
             case 'xlsx':
             case 'xlx':
                 $obj = new FileExcel();
-
                 break;
             case 'json':
                 $obj = new FileJson();
@@ -395,10 +410,15 @@ class FileManager
                 break;
             case 'xml':
 
-
+                $obj = new FileXml();
                 break;
+            case 'csv':
+                $obj = new FileCsv();
             default :
+                $obj = FALSE;
                 break;
         }
+        return $obj;
     }
+
 }
