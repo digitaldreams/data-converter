@@ -256,8 +256,8 @@ class FileManager {
     }
 
     public function toJson() {
-        $assocData = $this->toAssoc();
-        return json_encode($assocData);
+        //   $assocData = $this->toAssoc();
+        return json_encode($this->data);
     }
 
     /**
