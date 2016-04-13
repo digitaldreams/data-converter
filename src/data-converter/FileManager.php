@@ -421,4 +421,12 @@ class FileManager {
         return $obj;
     }
 
+    public function getData() {
+        return $this->data;
+    }
+
+    public function getError() {
+        return $this->error;
+    }
+
 }
