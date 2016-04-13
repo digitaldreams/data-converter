@@ -21,8 +21,8 @@
         "phpoffice/phpexcel": "1.8.*"
     },
     "autoload": {
-        "psr-0": {
-            "data-converter": "src"
+     "psr-4": {
+            "DataConverter\\": "src/data-converter/"
         }
     }
 }
