@@ -19,7 +19,7 @@
     },
     "require-dev":{
         "phpoffice/phpexcel": "dev-master"
-    }
+    },
     "autoload": {
         "psr-0": {
             "data-converter": "src"
