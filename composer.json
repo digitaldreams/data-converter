@@ -14,9 +14,12 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "phpoffice/phpexcel": "dev-master"
+        "php": ">=5.4.0"
+        
     },
+    "require-dev":{
+        "phpoffice/phpexcel": "dev-master"
+    }
     "autoload": {
         "psr-0": {
             "data-converter": "src"
