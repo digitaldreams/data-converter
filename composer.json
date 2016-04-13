@@ -18,7 +18,7 @@
         
     },
     "require-dev":{
-        "phpoffice/phpexcel": "dev-master"
+        "phpoffice/phpexcel": "1.8.*"
     },
     "autoload": {
         "psr-0": {
