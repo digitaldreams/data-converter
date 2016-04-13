@@ -84,5 +84,5 @@ if ($fileManager === FALSE) {
 
 ?>
 
-
+**More examples is in demo/exmaples.php file**
 
