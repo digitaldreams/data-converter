@@ -1,4 +1,4 @@
-<?php nnamespace  DataConverter;
+<?php namespace  DataConverter;
 
 /**
  * Description of FileJson
