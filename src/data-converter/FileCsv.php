@@ -26,7 +26,7 @@ class FileCsv extends FileManager implements FileManagerInterface {
     public function write() {
         $this->mode = 'w+';
         $this->loadFile($this->file_path);
-        $splFileObject->fwrite($this->toText());
+        $this->file->fwrite($this->toText());
         return $this;
     }
 
