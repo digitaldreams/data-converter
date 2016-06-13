@@ -7,19 +7,19 @@ $fileManager = new DataConverter\FileExcel();
 /*
  * Read All data
  *  
-
-  $config = [
-  'file_path' => 'file/contacts.xlsx',
-  'first_row_as_headline' => true,
-  ];
-  $data = $fileManager->config($config)->read()->toXml();
-
-  $data2 = $fileManager->config($config)->read()->toText();
-  print_r($data2);
-
-  $data3 = $fileManager->config($config)->read()->makeAssoc()->toJson();
-  print_r($data3);
  */
+$config = [
+    'file_path' => 'file/contacts.xlsx',
+    'first_row_as_headline' => true,
+];
+$data = $fileManager->config($config)->read()->toXml();
+
+$data2 = $fileManager->config($config)->read()->toText();
+print_r($data2);
+
+$data3 = $fileManager->config($config)->read()->makeAssoc()->toJson();
+print_r($data3);
+
 
 /*
  * Read data by Range

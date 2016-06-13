@@ -419,6 +419,7 @@ class FileManager {
                 break;
             case 'csv':
                 $obj = new FileCsv();
+                break;
             default :
                 $obj = FALSE;
                 break;
