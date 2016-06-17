@@ -9,9 +9,11 @@ something in web application we need to convert data from excel file to array, a
 }
 ##Features
 1. Excel to Array and associative array (if first row marked as heading)
-2. Excel to json
-3. Excel to text
+2. Excel to json(json to excel)
+3. Excel to text(text to excel)
 4. Filter data while import from excel,json,txt,csv
+5. And from one format you can exchange other easily
+
 
 ##Uses
 
