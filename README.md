@@ -4,7 +4,7 @@ something in web application we need to convert data from excel file to array, a
 
   "require-dev": {
   
-     "digitaldream/data-converter": "dev-master"
+     "digitaldream/data-converter": "1.0.0"
         
 }
 ##Features
