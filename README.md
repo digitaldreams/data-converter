@@ -21,7 +21,7 @@ something in web application we need to convert data from excel file to array, a
 
 <?php
 
-$fileManager = new DataConverter\FileExcel();
+$fileManager = new \DataConverter\FileExcel();
 
 // A lot of other configuration like you can define from which row you like to read and how many row it will be read. Also you can // //append data to file.  
 
@@ -52,7 +52,7 @@ $config = [
 
 $fileFullPath='test.txt';
 
-  $fileManager = DataConverter\FileManager::initByFileType($fileFullPath);
+  $fileManager = \DataConverter\FileManager::initByFileType($fileFullPath);
 
 if ($fileManager === FALSE) {
 
@@ -70,7 +70,7 @@ if ($fileManager === FALSE) {
 
 <?php
 
- $fileManager = new DataConverter\FileExcel();
+ $fileManager = new \DataConverter\FileExcel();
 
  $configFile = [
  
