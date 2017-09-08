@@ -16,12 +16,12 @@ something in web application we need to convert data from excel file to array, a
 
 ##Uses
 
-//Example 01
+Example 01
 
 ```php
 $fileManager = new \DataConverter\FileExcel();
 ```
-// A lot of other configuration like you can define from which row you like to read and how many row it will be read. Also you can // //append data to file.  
+ A lot of other configuration like you can define from which row you like to read and how many row it will be read. Also you can append data to file.  
 
 ```php
 
@@ -37,7 +37,7 @@ $fileManager = new \DataConverter\FileExcel();
   print_r($data);  
   ?>
 ```
-//Example 02
+Example 02
 
 ```php
 
@@ -56,7 +56,7 @@ if ($fileManager === FALSE) {
  $data = $fileManager->config($config)->read()->makeAssoc()->filter(['column_1','column_2])->getData();
 
 ```
-//Example 03
+Example 03
 
 ```php
  $fileManager = new \DataConverter\FileExcel();
