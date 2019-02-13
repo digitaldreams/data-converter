@@ -1,4 +1,6 @@
-<?php namespace  DataConverter;
+<?php namespace DataConverter;
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Description of FileExcel
@@ -12,38 +14,38 @@ class FileExcel extends FileManager implements FileManagerInterface
 
     /**
      *
-     * @var type 
+     * @var type
      */
     protected $excel;
 
     /**
      * Active sheet title
-     * @var string 
+     * @var string
      */
     protected $title = 'main';
 
     /**
      *
-     * @var type 
+     * @var type
      */
     protected $writer;
 
     /**
      *
-     * @var type 
+     * @var type
      */
     protected $start_cell = 'A1';
 
     /**
      *
-     * @var type 
+     * @var type
      */
     protected $per_sheet = 3000;
 
     /**
      * Set Range of Cells to read e.g A1:D9
-     * 
-     * 
+     *
+     *
      */
     protected $range;
 
@@ -57,7 +59,7 @@ class FileExcel extends FileManager implements FileManagerInterface
 
     /**
      * Set Background Colour and Make Top Row Fridge.
-     * 
+     *
      * @param type $rgb
      */
     public function bgColor($rgb)
@@ -89,15 +91,24 @@ class FileExcel extends FileManager implements FileManagerInterface
             if ($this->hasError()) {
                 return $this;
             }
-            $inputFileType = \PHPExcel_IOFactory::identify($this->file_path);
-            $this->reader = \PHPExcel_IOFactory::createReader($inputFileType);
+
+            $inputFileType = IOFactory::identify($this->file_path);
+            $this->reader = IOFactory::createReader($inputFileType);
+            $this->reader->setReadDataOnly(true);
+
             $this->excel = $this->reader->load($this->file_path);
-            $range = $this->getRange();
-            if (!empty($range)) {
-                $retData = $this->excel->getActiveSheet()->rangeToArray($range);
-            } else {
-                $retData = $this->excel->getActiveSheet()->toArray();
+
+            $sheetCount = $this->excel->getSheetCount();
+            $retData = [];
+            for ($i = 0; $i < $sheetCount; $i++) {
+                $sheet = $this->excel->getSheet($i);
+                $sheetData = $sheet->toArray(null, true, true, true);
+                if ($this->first_row_as_headline && $i > 0) {
+                    array_shift($sheetData);
+                }
+                $retData = array_merge($retData, $sheetData);
             }
+            //   print_r($retData);
             $this->data = $retData;
         } catch (\Exception $ex) {
             $this->setException($ex)->throwException($ex);
@@ -107,11 +118,11 @@ class FileExcel extends FileManager implements FileManagerInterface
 
     /**
      * Append data to a existing excel file.
-     * 
+     *
      * Get the Height Row +1  and then set start point A.234.
      * In this way data will be appended perfectly.
      * This will be useful when generating a long excel field which need couple of  minutes.
-     * 
+     *
      * @param type $fileName
      */
     public function append($file_path = '')
@@ -155,7 +166,7 @@ class FileExcel extends FileManager implements FileManagerInterface
             $this->range = $this->from;
 
             if (!empty($this->to)) {
-                $this->range.=":" . $this->to;
+                $this->range .= ":" . $this->to;
             }
         }
         return $this->range;
