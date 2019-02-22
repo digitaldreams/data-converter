@@ -1,6 +1,8 @@
 <?php namespace DataConverter;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * Description of FileExcel
@@ -53,8 +55,8 @@ class FileExcel extends FileManager implements FileManagerInterface
     {
         parent::__construct();
         //do some initialization stuff
-        $this->excel = new \PHPExcel();
-        $this->writer = \PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
+        $this->excel = new Xlsx( new Spreadsheet());
+        $this->writer = IOFactory::createWriter( new Spreadsheet(), 'Xlsx');
     }
 
     /**
