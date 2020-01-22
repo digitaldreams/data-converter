@@ -55,8 +55,9 @@ class FileExcel extends FileManager implements FileManagerInterface
     {
         parent::__construct();
         //do some initialization stuff
-        $this->excel = new Xlsx( new Spreadsheet());
-        $this->writer = IOFactory::createWriter( new Spreadsheet(), 'Xlsx');
+        $this->excel = new Spreadsheet();
+
+        $this->writer = IOFactory::createWriter($this->excel, 'Xlsx');
     }
 
     /**
@@ -141,16 +142,14 @@ class FileExcel extends FileManager implements FileManagerInterface
 
     /**
      * Write data to excel file after done necessary modification
-     * @return \App\Libs\Report\FileExcel
+     * @return $this
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function write()
     {
-        $this->excel->getActiveSheet()->fromArray($this->data, null, $this->start_cell);
-        $this->excel->getActiveSheet()->setTitle($this->title);
-        $this->excel->setActiveSheetIndex(0);
-//time() will output timestamp so that we can able to check when this file is created.
-
-
+        $sheet = $this->excel->getActiveSheet();
+        $sheet->fromArray($this->data, NULL, 'A1');
         $this->writer->save($this->file_path);
         return $this;
     }
