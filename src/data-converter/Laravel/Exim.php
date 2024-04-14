@@ -84,7 +84,7 @@ class Exim
 
     public function dataFile($pathToFile)
     {
-        $ext             = pathinfo($pathToFile, PATHINFO_EXTENSION);
+        $ext             = pathinfo((string) $pathToFile, PATHINFO_EXTENSION);
         $this->extension = str_replace(".", "", $ext);
 
         $this->fileManager = FileManager::initByExt($this->extension);
@@ -126,7 +126,7 @@ class Exim
     public function write($filePath = '', $filter = [])
     {
         if (!empty($filePath)) {
-            $ext               = pathinfo($filePath, PATHINFO_EXTENSION);
+            $ext               = pathinfo((string) $filePath, PATHINFO_EXTENSION);
             $this->extension   = str_replace(".", "", $ext);
             $this->fileManager = FileManager::initByExt($this->extension);
         } else {

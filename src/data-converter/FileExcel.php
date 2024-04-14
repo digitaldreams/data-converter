@@ -85,7 +85,7 @@ class FileExcel extends FileManager implements FileManagerInterface
     {
 
         try {
-            $retData = array($range = '');
+            $retData = [$range = ''];
             if (!empty($range)) {
                 $this->range = $range;
             }

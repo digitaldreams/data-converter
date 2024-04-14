@@ -9,10 +9,10 @@ namespace DataConverter;
  */
 class FileManager {
 
-    const FILE_TYPE_EXCEL = 'excel';
-    const FILE_TYPE_TEXT = 'text';
-    const FILE_TYPE_JSON = 'json';
-    const FILE_TYPE_XML = 'xml';
+    public const FILE_TYPE_EXCEL = 'excel';
+    public const FILE_TYPE_TEXT = 'text';
+    public const FILE_TYPE_JSON = 'json';
+    public const FILE_TYPE_XML = 'xml';
 
     /**
      * Full path of the file.
@@ -180,7 +180,6 @@ class FileManager {
 
     /**
      * Set settings as associative array. Where key will be the name of the property and value would be its value
-     * @param array $config
      * @return \App\Libs\Report\FileManager Description
      */
     public function config(array $config) {
@@ -214,7 +213,7 @@ class FileManager {
         $retArr = [];
         foreach ($this->data as $index => $value) {
             $row = (array) $value;
-            $filteredArray = array();
+            $filteredArray = [];
             $filteredArray = array_intersect_key($row, array_flip($this->filter));
             $retArr[] = $filteredArray;
         }
@@ -345,7 +344,6 @@ class FileManager {
 
     /**
      * Set error message from an exception
-     * @param \Exception $ex
      * @return type
      */
     public function setException(\Exception $ex) {
@@ -355,13 +353,10 @@ class FileManager {
 
     /**
      * Throw a new exception
-     * @param \Exception $ex
-     * @return \App\Libs\Report\FileManager
      * @throws \Exception
      */
-    public function throwException(\Exception $ex) {
+    public function throwException(\Exception $ex): never {
         throw new \Exception($ex->getMessage(), $ex->getCode(), $ex);
-        return $this;
     }
 
     /**

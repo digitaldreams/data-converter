@@ -14,7 +14,8 @@ class FileXml extends FileManager implements FileManagerInterface {
      * @param file $file_path qualified file path
      * @param character $mode file open mode
      */
-    public function __construct($file_path = '', $mode = '') {
+    public function __construct()
+    {
         parent::__construct();
     }
 
